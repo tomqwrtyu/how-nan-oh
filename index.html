@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/sidenav.css">
+    <link rel="stylesheet" type="text/css" href="css/drawTree.css">
+    <title>2D Layout Drawer</title>
+</head>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<body>
+    <div class="wrapper">
+        <div class="sidenav box1">
+            <div class="dropdown">
+                <button class="dropbtn">File<i class="fa fa-caret-down"></i></button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Examples<i class="fa fa-caret-down"></i></button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">View<i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <button class="dropbtn 2D_PageOpen" id="default_PageOpen">2D</a>
+                    <button class="dropbtn 3D_PageOpen">3D</a>
+                    <button class="dropbtn Tree_PageOpen">Tree</a>
+                </div>
+            </div>
+        </div>
+        <div id="2D" class="tabcontent box2 canvas-container">
+            <div class="control">
+                <h1>Settings</h1>
+                <label for="show-Margin">Show Margin:</label>
+                <input type="checkbox" id="show-Margin" onclick="showMargin()">
+                <label for="show-PNS">Show PNS:</label>
+                <input type="checkbox" id="show-PNS" onclick="showPNS()">
+                <label for="show-SafetyDistance">SafetyDistance:</label>
+                <input type="checkbox" id="show-SafetyDistance">
+                <label ><span id = "sdlabel"></span> mm</label>
+                <label for="show-MaxArea">MaxArea:</label>
+                <input type="checkbox" id="show-MaxArea">
+            </div>
+            <!-- <div id="Layout_single"></div> -->
+            <div class="canvas left" id="Layout_front"></div>
+            <div class="canvas right" id="Layout_back"></div>
+            <div class="canvas netBox" id="netCheckBoxes">
+                <label for="highlight-net">Highlight Nets</label><br>
+            </div>
+        </div>
+        <div id="3D" class="tabcontent box2 canvas-container"></div>
+        <div id="Tree" class="tabcontent box2 canvas-container"></div>
+    </div>
+
+    <script type="module" src="js/files/csvParser.js"></script>
+    <script type="module" src="js/files/inputFile.js"></script>
+    <script type="module" src="js/svg canvas.js"></script>
+    <script type="module" src="js/svg controller.js"></script>
+    <script type="module" src="js/drawTree.js"></script>
+    <script type="module" src="js/Layout.js"></script>
+    <script type="module" src="js/3D scene.js"></script>
+    <script type="module" src="js/openPage.js"></script>
+    <script type="module" src="js/main.js"></script>
+    
+    <script>
+        function showMargin() {
+            let checkBox = document.getElementById("show-Margin");
+            let comp_margin_list = document.querySelectorAll(".component-margin");
+            if (checkBox.checked == true) {
+                for (let i = 0; i < comp_margin_list.length; i++) {
+                    comp_margin_list[i].style.display = "block";
+                }
+            } else {
+                for (let i = 0; i < comp_margin_list.length; i++) {
+                    comp_margin_list[i].style.display = "none";
+                }
+            }
+        }
+        
+        function showPNS() {
+            let checkBox = document.getElementById("show-PNS");
+            let comp_list = document.querySelectorAll(".component");
+            if (checkBox.checked == true) {
+                for (let i = 0; i < comp_list.length; i++) {
+                    comp_list[i].setAttribute('fill', comp_list[i].getAttribute("PNS-fill"));
+                }
+            } else {
+                for (let i = 0; i < comp_list.length; i++) {
+                    comp_list[i].setAttribute('fill', comp_list[i].getAttribute("original-fill"));
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
